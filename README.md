@@ -1,10 +1,18 @@
 # singularity-vm
 
-This repository has a Vagrant installation for a Ubuntu 16.04.2 LTS Virtual Machine that can host Singularity containers on a Mac (and maybe Windows - the instructions here will be for a Mac, but they may work on Windows with some modifications). The virtual machine will have Singularity (http://singularity.lbl.gov) installed along with the Fermilab kerberos client and CVMFS. 
+This repository has a Vagrant installation for a Ubuntu 16.04.2 LTS Virtual Machine that can host Singularity containers on a Mac (and maybe Windows - the instructions here will be for a Mac, but they may work on Windows with some modifications). 
+
+Features of this virtual machine:
+
+* Based on Ubuntu 16.04.2 LTS (the most recent long-term support version of Ubuntu)
+* Singularity will be installed (that's kinda the whole point!)
+* Fermilab Kerberos client will be installed (so you can kinit to your experiment's interactive nodes at Fermilab)
+* CVMFS (CERN Virtual File System) will be installed. Singularity containers will be able to use your experiment's CVMFS area
+* Access to your Mac's /Users directory via NFS for fast access. 
 
 ## Installation
 
-Here are installation instructions
+Here are installation instructions (again, for the Mac. They may work for Windows, but you will need to make some modifications).
 
 ### Install VirtualBox and Vagrant
 
@@ -48,6 +56,8 @@ It can take many mintutes.
 
 You may be asked for your Mac administrator password (whatever you use for `sudo`). This is ok - NFS is used to share your `/Users` directory with the virtual machine. Setting up NFS may require the password. 
 
+Why the `vagrant reload` commands? The first `vagrant up` will create the virtual machine and start configuring it. NFS will fail because the first boot will not get an IP address that NFS needs. Restarting the VM (`vagrant reload`) will allow it to get an IP address and NFS will succeed. The rest of the VM will be configured. Part of the configuration is to update all of the Ubuntu packages to their latest version. A reboot is then required to have those take affect, hence the final `vagrant reload`.  You will not need to do this again. To start the VM in the future, a simple `vagrant up` will work. 
+
 ## Logging into the virtual machine
 
 Change directory to where you installed `singularity-vm`,
@@ -62,9 +72,24 @@ and run `vagrant ssh`
 vagrant ssh
 ```
 
+### vagrant ssh options
+
+If you want to do X forwarding to your Mac (likely) then you will need `vagrant ssh -- -X`. If you want to do port forwarding (e.g. the Singularity container runs a web page) then you will need to do ssh tunnelling with something like 
+
+```bash
+vagrant ssh -- -X -L 8000:localhost:80   # forward Mac port 8000 to container port 80
+```
+
 If for some reason the VM was down, you can bring it back up with `vagrant up ; vagrant ssh`. 
 
 ## Mounting CVMFS
 
-The CVMFS reopsitories are not mounted by default. 
+The CVMFS reopsitories are not mounted automatically (the automounter caused problems with Singularity). There is a command in `/usr/local/bin` called `cvmfs_mount` that will allow you to mount any `X.opensciencegrid.org` repository by specifying `X`. For example,
+
+```bash
+cvmfs_mount gm2       # Mounts /cvmfs/gm2.opensciencegrid.org
+cvmfs_mount fermilab  # Mounts /cvmfs/fermilab.opensciencegrid.org
+```
+
+You will need to issue these commands every time the VM starts (perhaps write a script to make it easy). 
 
