@@ -52,7 +52,8 @@ It takes several steps to create and provision the virtual machine. You can do i
 vagrant up ; vagrant reload ; vagrant reload
 ```
 
-It can take many mintutes. 
+It can take many mintutes. You may see a message like `No guest IP was given to the Vagrant core NFS helper. This is an
+internal error that should be reported as a bug.` This message is benign - mostly. See the paragraph below about the vagrant reload commands. 
 
 You may be asked for your Mac administrator password (whatever you use for `sudo`). This is ok - NFS is used to share your `/Users` directory with the virtual machine. Setting up NFS may require the password. 
 
