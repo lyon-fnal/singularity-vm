@@ -7,7 +7,7 @@ apt-get -y update
 apt-get -y upgrade 
 apt-get -y dist-upgrade
 
-# Install kerberos and VOMS
+# Install kerberos
 apt-get install -yq krb5-user
 wget http://computing.fnal.gov/authentication/krb5conf/Linux/krb5.conf -O /etc/krb5.conf
 
@@ -18,18 +18,18 @@ rm -f cvmfs-release-latest_all.deb
 apt-get -y update
 apt-get install -y cvmfs
 
-# Fix autofs
+# Fix autofs to not include /cvmfs
 sed -i '/cvmfs/d' /etc/auto.master
 service autofs reload
 service autofs restart
 
-# Write domain.local
+# Write domain.local for cvmfs
 cat > /etc/cvmfs/default.local << NNNN
 CVMFS_REPOSITORIES="\`echo \$(ls /cvmfs | grep  '\.')|tr ' ' ,\`"
 CVMFS_HTTP_PROXY=DIRECT
 NNNN
 
-# Write opensciencegrid.org.local
+# Write opensciencegrid.org.local for cvmfs
 cat > /etc/cvmfs/domain.d/opensciencegrid.org.local << NNNN
 CVMFS_SERVER_URL="http://cvmfs.fnal.gov:8000/cvmfs/@org@.opensciencegrid.org;http://oasis-replica.opensciencegrid.org:8000/cvmfs/@org@.opensciencegrid.org"
 CVMFS_KEYS_DIR=/etc/cvmfs/keys/opensciencegrid.org
@@ -54,6 +54,9 @@ cd singularity-$VERSION
 ./configure --prefix=/usr/local
 make
 sudo make install
+
+# Remove the build and installation files
+rm -rf singularity-*
 
 apt-get clean
 
