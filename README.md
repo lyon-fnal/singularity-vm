@@ -24,7 +24,7 @@ Note that you can install Vagrant and VirtualBox from Homebrew. I find it easier
 
 ### Add plugins to Vagrant
 
-Once Vagrant is installed you need to add plugins. Open a terminal window and do the following...
+Once Vagrant is installed you need to add plugins. You only need to do this once. Open a terminal window and do the following...
 
 ```bash
 vagrant plugin install vagrant-vbguest
