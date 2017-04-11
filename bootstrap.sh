@@ -56,7 +56,7 @@ make
 sudo make install
 
 # Remove the build and installation files
-cd
+cd /home/ubuntu
 rm -rf singularity-*
 
 apt-get clean
