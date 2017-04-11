@@ -10,7 +10,7 @@ Here are installation instructions
 
 __VirtualBox__ is a free virtualization application from Oracle. Go to https://www.virtualbox.org and download the "OS X hosts" binary. Double click on the downloaded `.dmg` file. Then double click on the `.pkg` file to install. 
 
-VirtualBox is difficult to run and configure. __Vagrant__ is esentially a configuration manager for VirtualBox. With Vagrant you can define and run virtual machines. Go to https://www.vagrantup.com and click on the Download box. Then click on the Mac OSX download. Double click on the downloaded `.dmg` file and then double click on the `.pkg` file to install.
+VirtualBox is difficult to configure. __Vagrant__ is esentially a configuration manager for VirtualBox. With Vagrant you can define and run virtual machines. Go to https://www.vagrantup.com and click on the Download box. Then click on the Mac OSX download. Double click on the downloaded `.dmg` file and then double click on the `.pkg` file to install.
 
 Note that you can install Vagrant and VirtualBox from Homebrew. I find it easier to just download them from their web pages as above. 
 
