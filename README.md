@@ -72,6 +72,8 @@ and run `vagrant ssh`
 vagrant ssh
 ```
 
+You may have many virtual machines. Vagrant knows which one you want to ssh to by noting which directory you are in. 
+
 ### vagrant ssh options
 
 If you want to do X forwarding to your Mac (likely) then you will need `vagrant ssh -- -X`. If you want to do port forwarding (e.g. the Singularity container runs a web page) then you will need to do ssh tunnelling with something like 
