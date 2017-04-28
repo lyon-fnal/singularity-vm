@@ -108,7 +108,7 @@ If you use `sqlite3` directly on a file that is sitting under `/Users`, which is
 fcntl(3, F_SETLK, {type=F_RDLCK, whence=SEEK_SET, start=1073741824, len=1}
 ```
 
-Instructions for processing the output of `igprof` (a code profiler) involving making a sqlite database and so you may hit this problem in that context. 
+Instructions for processing the output of `igprof` (a code profiler) involve making a sqlite database and so you may hit this problem in that context. 
 
 This actually seems to be a problem with VirtualBox and the Ubuntu VM, not with Singularity, because I can reproduce the hang just with the VM. 
 
