@@ -96,3 +96,21 @@ cvmfs_mount fermilab  # Mounts /cvmfs/fermilab.opensciencegrid.org
 
 You will need to issue these commands every time the VM starts (perhaps write a script to make it easy). 
 
+## Known problems
+
+There are some problems that you may face
+
+### sqlite3 and igprof
+
+If you use `sqlite3` directly on a file that is sitting under `/Users`, which is mounted by NFS, `sqlite3` may hang forever when it tries to open the file. That is because `sqlite` is trying to apply a read lock on the file and NFS can't deal with this. I found this out by running `strace` on `sqlite3` and saw it getting stuck at,
+
+```
+fcntl(3, F_SETLK, {type=F_RDLCK, whence=SEEK_SET, start=1073741824, len=1}
+```
+
+Insstructions for processing the output of `igprof` (a code profiler) involving making a sqlite database and so you may hit this problem in that context. 
+
+This actually seems to be a problem with VirtualBox and the Ubuntu VM, not with Singularity, because I can reproduce the hang just with the VM. 
+
+The workaround is to have the database file sitting in a non-NFS mounted directory. Preferably a directory under `/vagrant` (perhaps `/vagrant/tmp`). If you put the file in `/tmp` or some area within the VM's filesystem, then you will unnecessarily grow the VM file. 
+
