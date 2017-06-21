@@ -59,6 +59,18 @@ sudo make install
 cd /home/ubuntu
 rm -rf singularity-*
 
+# Install netdata for monitoring
+# See https://github.com/firehol/netdata/wiki/Installation#1-prepare-your-system (under "This is how to do it by hand")
+apt-get install -y zlib1g-dev uuid-dev libmnl-dev gcc make git autoconf autoconf-archive autogen automake pkg-config curl
+echo 1 >/sys/kernel/mm/ksm/run  # Turn on kernel same-page merging (saves memory for netdata)
+echo 1000 >/sys/kernel/mm/ksm/sleep_millisecs
+git clone https://github.com/firehol/netdata.git --depth=1
+cd netdata/
+./netdata-installer.sh --dont-wait --dont-start-it
+echo 'art: gm2* nova* art* uboone*' >> /etc/netdata/apps_groups.conf
+cd ..
+rm -rf netdata
+
 apt-get clean
 
 # DONE!!

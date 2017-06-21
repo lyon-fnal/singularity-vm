@@ -23,6 +23,8 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
+  # Forward the port for netdata
+  config.vm.network "forwarded_port", guest: 19999, host: 19999, host_ip: "127.0.0.1", auto_correct: true
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -43,8 +45,8 @@ Vagrant.configure("2") do |config|
   # config.vm.synced_folder "../data", "/vagrant_data"
   # 
   # Adjust for your machine
-  config.vm.synced_folder "/Users", "/Users", type: "nfs"
-  config.vm.synced_folder "/cvmfs", "/cvmfsMac"
+  config.vm.synced_folder "/Users", "/Users" , type: "nfs"
+  #config.vm.synced_folder "/cvmfs", "/cvmfsMac"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -66,6 +68,7 @@ Vagrant.configure("2") do |config|
     vb.memory = 1024 * 4 * 2  # Memory is 2 GB per CPU
     vb.customize ["modifyvm", :id, "--vram", "128", "--accelerate3d", "on"]
     vb.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000 ]
+    vb.customize [ "setextradata", :id, "VBoxInternal2/SavestateOnBatteryLow", 0 ]
   end
 
   # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
