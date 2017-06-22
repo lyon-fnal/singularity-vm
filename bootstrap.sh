@@ -47,7 +47,7 @@ NNNN
 chmod a+x /usr/local/bin/cvmfs_mount
 
 # Install Singularity (see http://singularity.lbl.gov/install-linux )
-VERSION=2.2.1
+VERSION=2.3
 wget https://github.com/singularityware/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz
 tar xvf singularity-$VERSION.tar.gz
 cd singularity-$VERSION
