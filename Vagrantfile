@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
   # Forward the port for netdata
-  config.vm.network "forwarded_port", guest: 19999, host: 19999, host_ip: "127.0.0.1", auto_correct: true
+  config.vm.network "forwarded_port", guest: 19999, host: 19999, host_ip: "127.0.0.1", auto_correct: true, id: "netdata"
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
