@@ -38,6 +38,12 @@ NNNN
 
 cvmfs_config reload
 
+# Set up sshfs
+apt-get install -y sshfs
+mkdir /pnfs
+chown ubuntu /pnfs
+chgrp ubuntu /pnfs
+
 # Write cvmfs_mount
 cat > /usr/local/bin/cvmfs_mount << NNNN
 sudo umount -f /cvmfs/\$1.opensciencegrid.org
