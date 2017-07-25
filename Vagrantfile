@@ -45,7 +45,9 @@ Vagrant.configure("2") do |config|
   # config.vm.synced_folder "../data", "/vagrant_data"
   # 
   # Adjust for your machine
-  config.vm.synced_folder "/Users", "/Users" , type: "nfs"
+  config.vm.synced_folder "/Users", "/Users" , type: "nfs", map_uid: 502, map_gid: 20, 
+                          bsd__nfs_options: ['rw', 'no_subtree_check', 'no_root_squash', 'sync'] 
+  #config.vm.synced_folder "/Users", "/Users"
   #config.vm.synced_folder "/cvmfs", "/cvmfsMac"
 
   # Provider-specific configuration so you can fine-tune various
